@@ -15,13 +15,13 @@ export default function Play() {
                 <img src={logo} className={styles.logo} alt='Connect Four logo' />
                 <button className={styles.restartButton}>Restart</button>
             </header>
-            <main>
+            <main className={styles.contentContainer}>
                 <div className={styles.scoreCard}>
                     <div className={styles.playerNumber}>Player 1</div>
                     <div className={styles.playerScore}>{player1Score}</div>
                     <img src={player1} alt='' />
                 </div>
-                <div className={styles.scoreCard}>
+                <div className={styles.scoreCard + ' ' + styles.scoreCardRHS}>
                     <div className={styles.playerNumber}>Player 2</div>
                     <div className={styles.playerScore}>{player2Score}</div>
                     <img src={player2} alt='' />
