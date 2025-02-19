@@ -1,11 +1,19 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Route, Routes } from 'react-router'
 import './index.css'
+import MainMenu from './views/MainMenu.jsx'
+import Rules from './views/Rules.jsx'
+import Play from './views/Play.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <h1>Connect Four</h1>
-
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque, iusto. Eos distinctio cupiditate, eius consequuntur ut nostrum sequi commodi delectus quos? Commodi numquam quas fugiat placeat velit tempore, magnam molestiae nostrum cum quo voluptatum odit inventore incidunt quidem ratione? Nostrum atque sapiente dicta, sit odit perferendis inventore placeat nam, consequuntur ex molestiae quae soluta laudantium consectetur aliquam. Hic reiciendis, aut voluptas molestias voluptates in illo libero. Ratione deserunt eum debitis dolorem, obcaecati blanditiis eligendi dicta labore enim velit quasi at et corporis odit! Expedita recusandae blanditiis odit veniam sequi consectetur illum ut fuga officiis. Adipisci iste eveniet nobis officia nulla, dolore veritatis numquam esse mollitia voluptas cupiditate eum quis quidem, quae, similique quo deserunt suscipit. Minus quae minima odio nostrum. Molestias blanditiis officia optio asperiores quidem consequatur sequi est modi ipsa quaerat porro libero ut, exercitationem laborum. Consequatur ullam dicta atque recusandae soluta molestiae adipisci molestias vel quae debitis, fugit laborum sunt eius ex facilis labore error ad est neque. Omnis temporibus tempora assumenda ab. Obcaecati possimus sapiente iure ratione deserunt veniam in incidunt accusantium eum est delectus asperiores, fugit voluptates nulla amet. Eius adipisci nihil ducimus aperiam vitae vel, aliquam, iure quam perspiciatis maxime, deleniti nobis. Neque cupiditate molestias culpa quam fugiat similique laborum incidunt nulla, voluptates voluptatum! Quod maxime incidunt ad, voluptatum voluptates, id, fugiat aliquid necessitatibus perferendis omnis quasi voluptatibus labore? Earum aliquid delectus ea quidem eveniet dolore sint in temporibus praesentium, ipsa vitae quaerat debitis illum similique quibusdam nihil magnam voluptatem recusandae et quod aliquam deleniti perferendis ex error? Minus tenetur inventore, enim rem impedit facilis non placeat soluta atque, est temporibus cupiditate et sed quo cumque iusto ex nulla magni! Qui voluptatibus cupiditate facilis possimus, odio, obcaecati quam corporis exercitationem alias non quibusdam veniam dolorum! Tenetur unde itaque vel saepe rem voluptatum, repellat fugit nihil. Voluptatibus voluptates inventore repudiandae non cupiditate quia numquam necessitatibus, dolore commodi nostrum ratione ad totam neque iusto nulla error vel quidem iure facilis ut exercitationem. Nam mollitia dolorum voluptates, libero quas exercitationem corporis, autem voluptatem aperiam, quia dolore quae ad. Nihil, sit facilis. Soluta mollitia sunt corporis ex animi quam! Eligendi vero sed, beatae expedita et nesciunt tenetur? Quae adipisci iure autem dicta libero quia hic iste inventore aliquam tenetur et in modi, repellat porro doloremque eius! Vel impedit dolorum quidem delectus dignissimos optio suscipit, voluptas, sint eius vero doloribus modi repudiandae enim! Esse neque id unde quas incidunt enim?</p>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<MainMenu />} />
+        <Route path='/rules' element={<Rules />} />
+        <Route path='/play' element={<Play />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>,
 )
