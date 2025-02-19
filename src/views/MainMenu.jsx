@@ -7,7 +7,7 @@ export default function MainMenu() {
     return (
         <div className={styles.viewContainer}>
             <div className={styles.menu}>
-                <img src={logo} alt='logo' />
+                <img src={logo} alt='logo' className={styles.logo} />
                 <Link to='/play/pvp' className='linkButton linkButtonYellow'>
                     Player vs Player
                     <img src={pvp} alt='' />
