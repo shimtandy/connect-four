@@ -1,0 +1,22 @@
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+
+/* Images are replaced elements and so by default will not shrink to fit a parent's width. */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* More legible - especially for dyslexic users. Meets WCAG criteria.
+   Probably too big for headings - set accordingly in those cases. */
+body {
+  line-height: 1.5;
+}
