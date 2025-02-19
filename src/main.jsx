@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<MainMenu />} />
         <Route path='/rules' element={<Rules />} />
-        <Route path='/play' element={<Play />} />
+        <Route path='/play/*' element={<Play />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
