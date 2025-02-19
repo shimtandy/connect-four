@@ -18,7 +18,15 @@ export default function Rules() {
                 </ol>
                 <Link to='/' >
                     {/* TODO: Add text version of button for accessibility */}
-                    <img src={tickButton} alt='return to menu' />
+                    <svg width="70" height="75" viewBox="0 0 70 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Group 2">
+                            <g id="Oval Copy 11">
+                                <circle cx="35" cy="35" r="32" fill="#FD6687" />
+                                <circle id="tickCircleBorder" cx="35" cy="35" r="33.5" stroke="black" stroke-width="3" />
+                            </g>
+                            <path id="Path" d="M20 34.5819L30.264 44.846L50.11 25" stroke="white" stroke-width="3" />
+                        </g>
+                    </svg>
                 </Link>
             </div>
         </div>
