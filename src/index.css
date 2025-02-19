@@ -20,3 +20,26 @@ input, button, textarea, select {
 body {
   line-height: 1.5;
 }
+
+
+/* Design System */
+body {
+  /* Colors */
+  --color-dark-purple: #5C2DD5;
+  --color-light-purple: #7945FF;
+  --color-salmon: #FD6687;
+  --color-yellow: #FFCE67;
+
+  /* Typography */
+  --font-large: bold 3.5rem/71px 'Space Grotesk', sans-serif; 
+  --font-medium: bold 1.5rem/31px 'Space Grotesk', sans-serif; 
+  --font-small: bold 1.25rem/26px 'Space Grotesk', sans-serif; 
+  --font-extra-small: bold 1.0rem/21px 'Space Grotesk', sans-serif; 
+  --font-body: 1.0rem/21px 'Space Grotesk', sans-serif;
+}
+
+/* General Styles */
+body {
+  font: var(--font-large);
+  background-color: var(--color-light-purple)
+}
