@@ -55,8 +55,9 @@
     border: 3px solid black;
     box-shadow: 0px 10px 0px 0px black;
 
-    max-width: 20rem;
-    padding: 0.1rem 3rem;
+    max-width: 200px;
+    padding-block: 0.1rem;
+    padding-inline: 9vw;
     position: relative;
 }
 
