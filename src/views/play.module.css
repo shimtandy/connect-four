@@ -1,15 +1,18 @@
 .viewContainer {
     display: grid;
     grid-template-columns: 10% 1fr 10%;
+    grid-template-rows: max-content auto;
     justify-content: center;
     justify-items: center;
 
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
+    padding-top: 10px;
 }
 
 .viewContainer > * {
     grid-column: 2;
+    height: max-content;
 }
 
 .header {
@@ -17,11 +20,11 @@
     align-items: center;
     justify-content: space-between;
 
-    width: 90%;
+    width: 100%;
 }
 
 .header img {
-    width: 50px;
+    width: 40px;
 }
 
 .header button {
@@ -53,7 +56,7 @@
     box-shadow: 0px 10px 0px 0px black;
 
     max-width: 20rem;
-    padding: 1rem 3rem;
+    padding: 0.1rem 3rem;
     position: relative;
 }
 
@@ -70,6 +73,7 @@
 
     left: 0;
     transform: translateX(-50%);
+    height: 90%;
 }
 
 .scoreCardRHS img {
@@ -86,6 +90,7 @@
     justify-items: center;
 
     width: 100%;
+    height: 100%;
 }
 
 .contentContainer > * {
@@ -94,7 +99,9 @@
 
 .gridAndScores {
     display: grid;
+    justify-items: center;
     grid-template-columns: 1fr 1fr;
+    width: 100%;
 }
 
 /* TODO: Create overlap effect with grid rather than position */
@@ -102,6 +109,8 @@
     grid-column: span 2;
     position: relative;
     top: 40px;
+
+    max-width: 350px;
     
 }
 
@@ -116,16 +125,8 @@
     width: 100%;
 }
 
-.playerIndicator {
+.indicatorSection {
     grid-column: 1 / -1;
-
-    display: grid;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
 
     width: 100%;
     height: 100%;
@@ -135,11 +136,21 @@
     border-radius: 80px 80px 0 0; 
 }
 
-.indicatorTriangle {
+.indicator {
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.indicatorImage {
     grid-area: 1 / 1 / 2 / 2;
-    width: 30%;
     height: auto;
     
+    /* For stacking context */
     position: relative;
 }
 
