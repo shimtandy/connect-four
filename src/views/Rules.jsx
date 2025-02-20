@@ -1,6 +1,5 @@
 import { Link } from 'react-router';
 import styles from './rules.module.css';
-import tickButton from '../assets/images/tick.svg';
 
 export default function Rules() {
     return (
