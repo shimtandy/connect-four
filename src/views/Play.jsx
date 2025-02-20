@@ -14,13 +14,13 @@ export default function Play() {
 
     return (
         <div className={styles.viewContainer}>
-            <div className={styles.paddedSection}>
-                <header className={styles.header}>
-                    <button className={styles.menuButton}>Menu</button>
-                    <img src={logo} className={styles.logo} alt='Connect Four logo' />
-                    <button className={styles.restartButton}>Restart</button>
-                </header>
-                <main className={styles.contentContainer}>
+            <header className={styles.header}>
+                <button className={styles.menuButton}>Menu</button>
+                <img src={logo} className={styles.logo} alt='Connect Four logo' />
+                <button className={styles.restartButton}>Restart</button>
+            </header>
+            <main className={styles.contentContainer}>
+                <div className={styles.gridAndScores}>
                     <div className={styles.scoreCard}>
                         <div className={styles.playerNumber}>Player 1</div>
                         <div className={styles.playerScore}>{player1Score}</div>
@@ -35,11 +35,9 @@ export default function Play() {
                         <img className={styles.gridBack} src={gridBack} alt='' />
                         <img className={styles.gridFront} src={gridFront} alt='' />
                     </div>
-                </main>
-            </div>
-            <div className={styles.playerIndicator}>
-                {!winner && 
-                    <>
+                </div>
+                {!winner &&
+                    <div className={styles.playerIndicator}>
                         <svg className={styles.indicatorTriangle} width="197" height="165" viewBox="0 0 197 165" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g filter="url(#filter0_d_5_3228)">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M3 55.2795C3 47.2326 7.82258 39.9694 15.2389 36.8468L90.2793 5.25082C95.2186 3.17114 100.786 3.16075 105.733 5.22198L181.692 36.8718C189.145 39.9772 194 47.2593 194 55.3333V132C194 143.046 185.046 152 174 152H23C11.9543 152 3 143.046 3 132V55.2795Z" fill="#FD6687" />
@@ -60,10 +58,10 @@ export default function Play() {
                             <div className={styles.indicatorPlayerNumber}>Player 1s Turn</div>
                             <div className={styles.timeLeft}>10s</div>
                         </div>
-                    </>
+                    </div>
                 }
                 {winner !== 0 && <p>Winner!</p>}
-            </div>
+                </main>
         </div>
     )
 }
