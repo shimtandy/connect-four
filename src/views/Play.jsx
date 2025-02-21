@@ -31,9 +31,20 @@ export default function Play() {
                         <div className={styles.playerScore}>{player2Score}</div>
                         <img src={player2} alt='' />
                     </div>
-                    <div className={styles.grid}>
-                        <img className={styles.gridBack} src={gridBack} alt='' />
-                        <img className={styles.gridFront} src={gridFront} alt='' />
+                    <div 
+                        className={styles.grid} 
+                        onClick={(event) => {
+                            const gridCells = 7
+                            let boundingRect = event.target.getBoundingClientRect()
+                            let gridSpaceMouseX = event.clientX - boundingRect.x
+                            let gridSpaceMouseY = event.clientY - boundingRect.y
+
+                            let gridCellX = Math.floor((gridSpaceMouseX / boundingRect.width) * gridCells + 1)
+                            let gridCellY = Math.floor((gridSpaceMouseY / boundingRect.height) * gridCells + 1)
+                            }
+                        }>
+                            <img className={styles.gridBack} src={gridBack} alt='' />
+                            <img className={styles.gridFront} src={gridFront} alt='' />
                     </div>
                 </div>
                 {!winner &&
