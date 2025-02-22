@@ -4,13 +4,16 @@ import player1 from '../assets/images/you.svg';
 import player2 from '../assets/images/cpu.svg';
 import gridFront from '../assets/images/grid-front-layer.svg';
 import gridBack from '../assets/images/grid-back-layer.svg';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import Disk from '../components/Disk';
 
 export default function Play() {
     let [player1Score, setPlayer1Score] = useState(0);
     let [player2Score, setPlayer2Score] = useState(0);
     let [currentTurn, setCurrentTurn] = useState(1);
+    let [placedDisks, setPlacedDisks] = useState(new Array(7).fill(new Array(6).fill(0)))
     let [winner, setWinner] = useState(0);
+    const gridRef = useRef(null)
 
     return (
         <div className={styles.viewContainer}>
@@ -31,20 +34,45 @@ export default function Play() {
                         <div className={styles.playerScore}>{player2Score}</div>
                         <img src={player2} alt='' />
                     </div>
-                    <div 
-                        className={styles.grid} 
+                    <div
+                        className={styles.grid}
+                        ref={gridRef}
                         onClick={(event) => {
                             const gridCells = 7
                             let boundingRect = event.target.getBoundingClientRect()
                             let gridSpaceMouseX = event.clientX - boundingRect.x
                             let gridSpaceMouseY = event.clientY - boundingRect.y
 
-                            let gridCellX = Math.floor((gridSpaceMouseX / boundingRect.width) * gridCells + 1)
-                            let gridCellY = Math.floor((gridSpaceMouseY / boundingRect.height) * gridCells + 1)
-                            }
-                        }>
-                            <img className={styles.gridBack} src={gridBack} alt='' />
-                            <img className={styles.gridFront} src={gridFront} alt='' />
+                            // Important that width is used for cellWidth. Grid has extra height
+                            // at the bottom..
+                            let cellSize = boundingRect.width / 7
+
+                            let gridCellX = Math.floor(gridSpaceMouseX / cellSize)
+                            let gridCellY = Math.floor(gridSpaceMouseY / cellSize)
+
+                            let newPlacedDisks = placedDisks.map((row, index) => {
+                                if ((gridCellX == index)) {
+                                    return row.map((value, innerIndex) => {
+                                        if (gridCellY == innerIndex) {
+                                            return currentTurn
+                                        } else {
+                                            return value
+                                        }
+                                    })
+                                } else {
+                                    return row
+                                }
+                            })
+                            setPlacedDisks(newPlacedDisks)
+                        }}>
+                        <img className={styles.gridBack} src={gridBack} alt='' />
+                        {gridRef &&
+                            <Disk
+                                gridX={5}
+                                cellSize={20}></Disk>
+                        }
+
+                        <img className={styles.gridFront} src={gridFront} alt='' />
                     </div>
                 </div>
                 {!winner &&
