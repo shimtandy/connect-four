@@ -4,16 +4,30 @@ import player1 from '../assets/images/you.svg';
 import player2 from '../assets/images/cpu.svg';
 import gridFront from '../assets/images/grid-front-layer.svg';
 import gridBack from '../assets/images/grid-back-layer.svg';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Disk from '../components/Disk';
 
 export default function Play() {
     let [player1Score, setPlayer1Score] = useState(0);
     let [player2Score, setPlayer2Score] = useState(0);
     let [currentTurn, setCurrentTurn] = useState(1);
-    let [placedDisks, setPlacedDisks] = useState(new Array(7).fill(new Array(6).fill(0)))
+    let [placedDisks, setPlacedDisks] = useState(new Array(6).fill(new Array(7).fill(0)))
     let [winner, setWinner] = useState(0);
     const gridRef = useRef(null)
+
+    function createDiskElements() {
+        
+        let diskElements = []
+        for (let rowNum = 0; rowNum < 6; rowNum++) {
+            for (let columnNum = 0; columnNum < 7; columnNum++) {
+                if (placedDisks[rowNum][columnNum] === 1 || placedDisks[rowNum][columnNum] === 2) {
+                    diskElements.push(<Disk key={rowNum + "," + columnNum} gridX={columnNum} gridY={rowNum}></Disk>)
+                }
+            }
+        }
+        console.log(diskElements)
+        return diskElements
+    }
 
     return (
         <div className={styles.viewContainer}>
@@ -38,7 +52,6 @@ export default function Play() {
                         className={styles.grid}
                         ref={gridRef}
                         onClick={(event) => {
-                            const gridCells = 7
                             let boundingRect = event.target.getBoundingClientRect()
                             let gridSpaceMouseX = event.clientX - boundingRect.x
                             let gridSpaceMouseY = event.clientY - boundingRect.y
@@ -51,10 +64,11 @@ export default function Play() {
                             let gridCellY = Math.floor(gridSpaceMouseY / cellSize)
 
                             let newPlacedDisks = placedDisks.map((row, index) => {
-                                if ((gridCellX == index)) {
+                                if ((gridCellY == index)) {
                                     return row.map((value, innerIndex) => {
-                                        if (gridCellY == innerIndex) {
+                                        if (gridCellX == innerIndex) {
                                             return currentTurn
+                                            // Check here if there is an existing disk.
                                         } else {
                                             return value
                                         }
@@ -66,12 +80,7 @@ export default function Play() {
                             setPlacedDisks(newPlacedDisks)
                         }}>
                         <img className={styles.gridBack} src={gridBack} alt='' />
-                        {gridRef &&
-                            <Disk
-                                gridX={5}
-                                cellSize={20}></Disk>
-                        }
-
+                        {createDiskElements()}
                         <img className={styles.gridFront} src={gridFront} alt='' />
                     </div>
                 </div>
@@ -102,7 +111,7 @@ export default function Play() {
                     </div>
                 }
                 {winner !== 0 && <p>Winner!</p>}
-                </main>
+            </main>
         </div>
     )
 }
