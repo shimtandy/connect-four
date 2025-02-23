@@ -15,8 +15,41 @@ export default function Play() {
     let [winner, setWinner] = useState(0);
     const gridRef = useRef(null)
 
+    function handleGridClick(event) {
+        let boundingRect = event.target.getBoundingClientRect()
+        let gridSpaceMouseX = event.clientX - boundingRect.x
+
+        // Important that width is used for cellWidth. Grid has extra height
+        // at the bottom..
+        let cellSize = boundingRect.width / 7
+        let cellX = Math.floor(gridSpaceMouseX / cellSize)
+        let finalCellY = -1
+
+        for (let cellY = 5; cellY >= 0; cellY--) {
+            if (placedDisks[cellY][cellX] === 0) {
+                finalCellY = cellY
+                setCurrentTurn(currentTurn === 1 ? 2 : 1)
+                break
+            }
+        }
+
+        let newPlacedDisks = placedDisks.map((row, index) => {
+            if ((finalCellY == index)) {
+                return row.map((value, innerIndex) => {
+                    if (cellX == innerIndex) {
+                        return currentTurn
+                    } else {
+                        return value
+                    }
+                })
+            } else {
+                return row
+            }
+        })
+        setPlacedDisks(newPlacedDisks)
+    }
+
     function createDiskElements() {
-        
         let diskElements = []
         for (let rowNum = 0; rowNum < 6; rowNum++) {
             for (let columnNum = 0; columnNum < 7; columnNum++) {
@@ -25,7 +58,6 @@ export default function Play() {
                 }
             }
         }
-        console.log(diskElements)
         return diskElements
     }
 
@@ -51,34 +83,7 @@ export default function Play() {
                     <div
                         className={styles.grid}
                         ref={gridRef}
-                        onClick={(event) => {
-                            let boundingRect = event.target.getBoundingClientRect()
-                            let gridSpaceMouseX = event.clientX - boundingRect.x
-                            let gridSpaceMouseY = event.clientY - boundingRect.y
-
-                            // Important that width is used for cellWidth. Grid has extra height
-                            // at the bottom..
-                            let cellSize = boundingRect.width / 7
-
-                            let gridCellX = Math.floor(gridSpaceMouseX / cellSize)
-                            let gridCellY = Math.floor(gridSpaceMouseY / cellSize)
-
-                            let newPlacedDisks = placedDisks.map((row, index) => {
-                                if ((gridCellY == index)) {
-                                    return row.map((value, innerIndex) => {
-                                        if (gridCellX == innerIndex) {
-                                            return currentTurn
-                                            // Check here if there is an existing disk.
-                                        } else {
-                                            return value
-                                        }
-                                    })
-                                } else {
-                                    return row
-                                }
-                            })
-                            setPlacedDisks(newPlacedDisks)
-                        }}>
+                        onClick={handleGridClick}>
                         <img className={styles.gridBack} src={gridBack} alt='' />
                         {createDiskElements()}
                         <img className={styles.gridFront} src={gridFront} alt='' />
@@ -104,7 +109,7 @@ export default function Play() {
                                 </defs>
                             </svg>
                             <div className={styles.indicatorText}>
-                                <div className={styles.indicatorPlayerNumber}>Player 1s Turn</div>
+                                <div className={styles.indicatorPlayerNumber}>Player {currentTurn}'s Turn</div>
                                 <div className={styles.timeLeft}>10s</div>
                             </div>
                         </div>
