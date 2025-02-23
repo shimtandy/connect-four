@@ -53,8 +53,23 @@ export default function Play() {
         let diskElements = []
         for (let rowNum = 0; rowNum < 6; rowNum++) {
             for (let columnNum = 0; columnNum < 7; columnNum++) {
-                if (placedDisks[rowNum][columnNum] === 1 || placedDisks[rowNum][columnNum] === 2) {
-                    diskElements.push(<Disk key={rowNum + "," + columnNum} gridX={columnNum} gridY={rowNum}></Disk>)
+                if (placedDisks[rowNum][columnNum] === 1) {
+                    diskElements.push(
+                        <Disk 
+                            key={rowNum + "," + columnNum} 
+                            gridX={columnNum} 
+                            gridY={rowNum}
+                            player='1'>
+                        </Disk>
+                    )
+                } else if (placedDisks[rowNum][columnNum] === 2) {
+                    diskElements.push(
+                        <Disk 
+                            key={rowNum + "," + columnNum} 
+                            gridX={columnNum} 
+                            gridY={rowNum}
+                            player='2'>
+                        </Disk>)
                 }
             }
         }
