@@ -1,3 +1,11 @@
+.player1 {
+    background-color: var(--color-salmon);
+}
+
+.player2 {
+    background-color: var(--color-yellow);
+}
+
 .disk {
     content: ' ';
     width: 50px;
@@ -5,13 +13,4 @@
     border-radius: 50px;
 
     position: absolute;
-    top: 0;
-}
-
-.player1 {
-    background-color: var(--color-salmon);
-}
-
-.player2 {
-    background-color: var(--color-yellow);
 }
