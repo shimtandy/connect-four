@@ -23,7 +23,7 @@ export default function Play() {
         // at the bottom..
         let cellSize = boundingRect.width / 7
         let cellX = Math.floor(gridSpaceMouseX / cellSize)
-        let finalCellY = -1
+        let finalCellY = 0
 
         for (let cellY = 5; cellY >= 0; cellY--) {
             if (placedDisks[cellY][cellX] === 0) {
@@ -47,11 +47,44 @@ export default function Play() {
             }
         })
         setPlacedDisks(newPlacedDisks)
+        checkWin({x: cellX, y: finalCellY}, currentTurn, newPlacedDisks)
     }
 
     function restart() {
         setPlacedDisks(new Array(6).fill(new Array(7).fill(0)))
         setCurrentTurn(1)
+    }
+
+    function checkWin(lastDiskPosition, lastPlayer, nextPlacedDisksState) {
+        const {x, y} = lastDiskPosition
+        let consecutive = 0
+        // Horizontal check
+        for (let i=0; i<7; i++) {
+            if (nextPlacedDisksState[y][i] == lastPlayer) {
+                consecutive++
+                if (consecutive == 4) {
+                    console.log('horizontal win')
+                    return true
+                }
+            } else {
+                consecutive = 0
+            }
+        }
+
+        // Vertical check
+        consecutive = 0;
+        for (let j=0; j<6; j++) {
+            if (nextPlacedDisksState[j][x] == lastPlayer) {
+                consecutive++
+                if (consecutive == 4) {
+                    console.log('vertical win')
+                    return true
+                }
+            } else {
+                consecutive = 0
+            }
+        }
+        return false
     }
 
     function createDiskElements() {
