@@ -84,6 +84,52 @@ export default function Play() {
                 consecutive = 0
             }
         }
+
+        // Diagonal 1 (main diagonal) check
+        let workingX = x
+        let workingY = y
+        consecutive = 0;
+        while (workingX !== 0 && workingY !== 0) {
+            workingX--
+            workingY--
+        }
+
+        while (workingX <= 6 && workingY <= 5) {
+            if (nextPlacedDisksState[workingY][workingX] == lastPlayer) {
+                consecutive++
+                if (consecutive == 4) {
+                    console.log('main diagonal win')
+                    return true
+                }
+            } else {
+                consecutive = 0
+            }
+            workingX++
+            workingY++
+        }
+
+        // Diagonal 2 (anti-diagonal) check
+        workingX = x
+        workingY = y
+        consecutive = 0
+        while (workingX !== 6 && workingY !== 0) {
+            workingX++
+            workingY--
+        }
+
+        while (workingX >= 0 && workingY <= 5) {
+            if (nextPlacedDisksState[workingY][workingX] == lastPlayer) {
+                consecutive++
+                if (consecutive == 4) {
+                    console.log('anti diagonal win')
+                    return true
+                }
+            } else {
+                consecutive = 0
+            }
+            workingX--
+            workingY++
+        }
         return false
     }
 
