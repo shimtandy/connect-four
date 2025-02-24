@@ -49,6 +49,11 @@ export default function Play() {
         setPlacedDisks(newPlacedDisks)
     }
 
+    function restart() {
+        setPlacedDisks(new Array(6).fill(new Array(7).fill(0)))
+        setCurrentTurn(1)
+    }
+
     function createDiskElements() {
         let diskElements = []
         for (let rowNum = 0; rowNum < 6; rowNum++) {
@@ -81,7 +86,11 @@ export default function Play() {
             <header className={styles.header}>
                 <button className={styles.menuButton}>Menu</button>
                 <img src={logo} className={styles.logo} alt='Connect Four logo' />
-                <button className={styles.restartButton}>Restart</button>
+                <button 
+                    className={styles.restartButton}
+                    onClick={restart}>
+                        Restart
+                </button>
             </header>
             <main className={styles.contentContainer}>
                 <div className={styles.gridAndScores}>
