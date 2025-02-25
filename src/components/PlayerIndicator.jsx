@@ -1,22 +1,45 @@
 import styles from './PlayerIndicator.module.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
-export default function PlayerIndicator({currentTurn, setCurrentTurn}) {
+export default function PlayerIndicator({currentTurn, setCurrentTurn, winner}) {
 
     let [timeLeft, setTimeLeft] = useState(10)
 
+    const timers = useRef([])
+
     useEffect(() => {
-        const interval = setInterval(() => setTimeLeft(timeLeft - 1), 1000)
+        for (let timer of timers.current) {
+            clearInterval(timer)
+        }
+
+        timers.current.push(setInterval(() => setTimeLeft(timeLeft - 1), 1000))
 
         if (timeLeft === 0) {
             setCurrentTurn(currentTurn === 1 ? 2 : 1)
             setTimeLeft(10)
         }
 
-        return () => clearInterval(interval)
+        return () => {
+            for (let timer of timers.current) {
+                clearInterval(timer)
+            }
+        }
     }, [timeLeft])
 
+    useEffect(() => {
+        setTimeLeft(10)
+    }, [currentTurn])
+
     const className = styles.indicator + ' ' + (currentTurn === 1 ? styles.player1 : styles.player2)
+    const winBackgroundClass = styles.indicatorSection + ' ' + (() => {
+        if (winner === 1) {
+            return styles.player1Wins
+        } else if (winner === 2) {
+            return styles.player2Wins
+        } else {
+            return ''
+        }
+    })()
 
     const indicatorSVG = 
     <svg className={styles.indicatorImage} width="197" height="165" viewBox="0 0 197 165" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,14 +60,22 @@ export default function PlayerIndicator({currentTurn, setCurrentTurn}) {
     </svg>
 
     return (
-        <div className={styles.indicatorSection}>
-                        <div className={className}>
-                            {indicatorSVG}
-                            <div className={styles.indicatorText}>
-                                <div className={styles.indicatorPlayerNumber}>Player {currentTurn}&apos;s Turn</div>
-                                <div className={styles.timeLeft}>{timeLeft}s</div>
-                            </div>
-                        </div>
+        <div className={winBackgroundClass}>
+            {winner === 0 ? (
+                <div className={className}>
+                    {indicatorSVG}
+                    <div className={styles.indicatorText}>
+                        <div className={styles.indicatorPlayerNumber}>Player {currentTurn}&apos;s Turn</div>
+                        <div className={styles.timeLeft}>{timeLeft}s</div>
                     </div>
+                </div>
+             ) : (
+                <div className={styles.winnerDisplay}>
+                    <div className={styles.winnerPlayerNum}>Player {winner}</div>
+                    <div className={styles.winsStatement}>Wins</div>
+                    <button>Play again</button>
+                </div>
+             )}
+        </div>
     )
 }

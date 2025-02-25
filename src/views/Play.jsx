@@ -209,10 +209,11 @@ export default function Play() {
                         <img className={styles.gridFront} src={gridFront} alt='' />
                     </div>
                 </div>
-                {!winner &&
-                    <PlayerIndicator currentTurn={currentTurn} setCurrentTurn={setCurrentTurn}/>
-                }
-                {winner !== 0 && <p>Winner!</p>}
+                <PlayerIndicator 
+                    currentTurn={currentTurn} 
+                    setCurrentTurn={setCurrentTurn}
+                    winner={winner}
+                />
             </main>
         </div>
     )
