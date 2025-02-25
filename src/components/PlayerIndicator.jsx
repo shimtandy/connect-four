@@ -16,6 +16,8 @@ export default function PlayerIndicator({currentTurn, setCurrentTurn}) {
         return () => clearInterval(interval)
     }, [timeLeft])
 
+    const className = styles.indicator + ' ' + (currentTurn === 1 ? styles.player1 : styles.player2)
+
     const indicatorSVG = 
     <svg className={styles.indicatorImage} width="197" height="165" viewBox="0 0 197 165" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g filter="url(#filter0_d_5_3228)">
@@ -36,7 +38,7 @@ export default function PlayerIndicator({currentTurn, setCurrentTurn}) {
 
     return (
         <div className={styles.indicatorSection}>
-                        <div className={styles.indicator}>
+                        <div className={className}>
                             {indicatorSVG}
                             <div className={styles.indicatorText}>
                                 <div className={styles.indicatorPlayerNumber}>Player {currentTurn}&apos;s Turn</div>
