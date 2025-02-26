@@ -7,6 +7,8 @@ import gridBack from '../assets/images/grid-back-layer.svg';
 import { useRef, useEffect, useState } from 'react';
 import Disk from '../components/Disk';
 import PlayerIndicator from '../components/PlayerIndicator';
+import Modal from 'react-modal'
+import { Link } from 'react-router';
 
 export default function Play() {
     const TIME_PER_TURN = 20
@@ -19,6 +21,7 @@ export default function Play() {
     let [currentTurn, setCurrentTurn] = useState(1);
     let [placedDisks, setPlacedDisks] = useState(Array(GRID_HEIGHT).fill().map(() => Array(GRID_WIDTH).fill(0)))
     let [winner, setWinner] = useState(0);
+    let [showModal, setShowModal] = useState(false);
     const gridRef = useRef(null)
 
     useEffect(() => {
@@ -200,7 +203,9 @@ export default function Play() {
     return (
         <div className={styles.viewContainer}>
             <header className={styles.header}>
-                <button className={styles.menuButton}>Menu</button>
+                <button 
+                    className={styles.menuButton}
+                    onClick={() => setShowModal(true)}>Menu</button>
                 <img src={logo} className={styles.logo} alt='Connect Four logo' />
                 <button 
                     className={styles.restartButton}
@@ -237,6 +242,27 @@ export default function Play() {
                     restart={restart}
                 />
             </main>
+            <Modal
+                isOpen={showModal}
+                onRequestClose={() => setShowModal(false)}
+                appElement={document.getElementById('root')}
+                className={styles.modal}
+                overlayClassName={styles.modalOverlay}>
+                    <h1>Pause</h1>
+                    <button 
+                        className='linkButton'
+                        style={{justifyContent: 'center'}}
+                        onClick={() => setShowModal(false)}>Continue Game</button>
+                    <button 
+                        className='linkButton'
+                        style={{justifyContent: 'center'}}
+                        onClick={() => {restart(); setShowModal(false)}}>Restart</button>
+                    <Link
+                        to='/' 
+                        className='linkButton linkButtonSalmon'
+                        style={{justifyContent: 'center'}}>Quit Game</Link>
+            </Modal>
+
         </div>
     )
 }
