@@ -22,18 +22,20 @@ export default function Play() {
     let [placedDisks, setPlacedDisks] = useState(Array(GRID_HEIGHT).fill().map(() => Array(GRID_WIDTH).fill(0)))
     let [winner, setWinner] = useState(0);
     let [showModal, setShowModal] = useState(false);
+    
     const gridRef = useRef(null)
+    const roundTimer = useRef(null)
+
 
     useEffect(() => {
-            let timer = setInterval(() => setTimeLeft(timeLeft - 1), 1000)
+            roundTimer.current = setInterval(() => setTimeLeft(timeLeft - 1), 1000)
 
             if (timeLeft === 0) {
                 setCurrentTurn(turn => turn === 1 ? 2 : 1)
                 setTimeLeft(TIME_PER_TURN)
             }
-    
-            // Closure over timer variable
-            return () => {clearInterval(timer)}
+
+            return () => {clearInterval(roundTimer.current)}
         }, [timeLeft])
 
 
@@ -245,6 +247,8 @@ export default function Play() {
             <Modal
                 isOpen={showModal}
                 onRequestClose={() => setShowModal(false)}
+                onAfterOpen={() => clearInterval(roundTimer.current)}
+                onAfterClose={() => roundTimer.current = setInterval(() => setTimeLeft(timeLeft - 1), 1000)}
                 appElement={document.getElementById('root')}
                 className={styles.modal}
                 overlayClassName={styles.modalOverlay}>
