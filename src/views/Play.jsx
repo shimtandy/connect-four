@@ -10,12 +10,14 @@ import PlayerIndicator from '../components/PlayerIndicator';
 
 export default function Play() {
     const TIME_PER_TURN = 20
+    const GRID_WIDTH = 7
+    const GRID_HEIGHT = 6
 
     let [timeLeft, setTimeLeft] = useState(TIME_PER_TURN)
     let [player1Score, setPlayer1Score] = useState(0);
     let [player2Score, setPlayer2Score] = useState(0);
     let [currentTurn, setCurrentTurn] = useState(1);
-    let [placedDisks, setPlacedDisks] = useState(Array(6).fill().map(() => Array(7).fill(0)))
+    let [placedDisks, setPlacedDisks] = useState(Array(GRID_HEIGHT).fill().map(() => Array(GRID_WIDTH).fill(0)))
     let [winner, setWinner] = useState(0);
     const gridRef = useRef(null)
 
@@ -38,7 +40,7 @@ export default function Play() {
 
         // Important that width is used for cellWidth. Grid has extra height
         // at the bottom..
-        let cellSize = boundingRect.width / 7
+        let cellSize = boundingRect.width / GRID_WIDTH
         let cellX = Math.floor(gridSpaceMouseX / cellSize)
         let finalCellY = 0
 
@@ -74,7 +76,7 @@ export default function Play() {
 
 
     function restart() {
-        setPlacedDisks(Array(6).fill().map(() => Array(7).fill(0)))
+        setPlacedDisks(Array(GRID_HEIGHT).fill().map(() => Array(GRID_WIDTH).fill(0)))
         setCurrentTurn(1)
         setTimeLeft(TIME_PER_TURN)
         setWinner(0)
@@ -97,7 +99,7 @@ export default function Play() {
         const {x, y} = lastDiskPosition
         let consecutive = 0
         // Horizontal check
-        for (let i=0; i<7; i++) {
+        for (let i=0; i<GRID_WIDTH; i++) {
             if (nextPlacedDisksState[y][i] == lastPlayer) {
                 consecutive++
                 if (consecutive == 4) {
@@ -110,7 +112,7 @@ export default function Play() {
 
         // Vertical check
         consecutive = 0;
-        for (let j=0; j<6; j++) {
+        for (let j=0; j<GRID_HEIGHT; j++) {
             if (nextPlacedDisksState[j][x] == lastPlayer) {
                 consecutive++
                 if (consecutive == 4) {
@@ -130,7 +132,7 @@ export default function Play() {
             workingY--
         }
 
-        while (workingX <= 6 && workingY <= 5) {
+        while (workingX <= GRID_HEIGHT && workingY <= 5) {
             if (nextPlacedDisksState[workingY][workingX] == lastPlayer) {
                 consecutive++
                 if (consecutive == 4) {
@@ -147,7 +149,7 @@ export default function Play() {
         workingX = x
         workingY = y
         consecutive = 0
-        while (workingX !== 6 && workingY !== 0) {
+        while (workingX !== GRID_HEIGHT && workingY !== 0) {
             workingX++
             workingY--
         }
@@ -170,8 +172,8 @@ export default function Play() {
 
     function createDiskElements() {
         let diskElements = []
-        for (let rowNum = 0; rowNum < 6; rowNum++) {
-            for (let columnNum = 0; columnNum < 7; columnNum++) {
+        for (let rowNum = 0; rowNum < GRID_HEIGHT; rowNum++) {
+            for (let columnNum = 0; columnNum < GRID_WIDTH; columnNum++) {
                 if (placedDisks[rowNum][columnNum] === 1) {
                     diskElements.push(
                         <Disk 
@@ -227,8 +229,6 @@ export default function Play() {
                         <img className={styles.gridFront} src={gridFront} alt='' />
                     </div>
                 </div>
-                {/* Key is used to prevent the indicator for different players sharing the same timer state.
-                    This occurs because the component is always in the same place in the render tree. */}
                 <PlayerIndicator
                     timeLeft={timeLeft}
                     currentTurn={currentTurn} 
