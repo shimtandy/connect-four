@@ -1,34 +1,38 @@
 import styles from './PlayerIndicator.module.css'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function PlayerIndicator({currentTurn, setCurrentTurn, winner}) {
+// Problem was that this is always rendered in the same position. As such, the timeLeft state was persisting between
+// renders. The same instance was being used for each render
+
+export default function PlayerIndicator({currentTurn, setCurrentTurn, winner, restart}) {
 
     let [timeLeft, setTimeLeft] = useState(10)
 
-    const timers = useRef([])
-
     useEffect(() => {
-        for (let timer of timers.current) {
+        let timer = null
+
+        if (winner === 0) {
             clearInterval(timer)
-        }
 
-        timers.current.push(setInterval(() => setTimeLeft(timeLeft - 1), 1000))
+            timer = setInterval(() => setTimeLeft(timeLeft - 1), 1000)
 
-        if (timeLeft === 0) {
-            setCurrentTurn(currentTurn === 1 ? 2 : 1)
-            setTimeLeft(10)
+            if (timeLeft === 0) {
+                setCurrentTurn(currentTurn === 1 ? 2 : 1)
+                setTimeLeft(10)
+            }
+        } else {
+            timer = setInterval(() => setTimeLeft(timeLeft - 1), 1000)
         }
 
         return () => {
-            for (let timer of timers.current) {
-                clearInterval(timer)
-            }
+            clearInterval(timer)
         }
-    }, [timeLeft])
+    }, [timeLeft, winner])
 
     useEffect(() => {
         setTimeLeft(10)
     }, [currentTurn])
+
 
     const className = styles.indicator + ' ' + (currentTurn === 1 ? styles.player1 : styles.player2)
     const winBackgroundClass = styles.indicatorSection + ' ' + (() => {
@@ -73,7 +77,7 @@ export default function PlayerIndicator({currentTurn, setCurrentTurn, winner}) {
                 <div className={styles.winnerDisplay}>
                     <div className={styles.winnerPlayerNum}>Player {winner}</div>
                     <div className={styles.winsStatement}>Wins</div>
-                    <button>Play again</button>
+                    <button onClick={restart}>Play again</button>
                 </div>
              )}
         </div>

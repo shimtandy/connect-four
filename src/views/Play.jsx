@@ -12,10 +12,10 @@ export default function Play() {
     let [player1Score, setPlayer1Score] = useState(0);
     let [player2Score, setPlayer2Score] = useState(0);
     let [currentTurn, setCurrentTurn] = useState(1);
-    let [placedDisks, setPlacedDisks] = useState(new Array(6).fill(new Array(7).fill(0)))
+    let [placedDisks, setPlacedDisks] = useState(Array(6).fill().map(() => Array(7).fill(0)))
     let [winner, setWinner] = useState(0);
     const gridRef = useRef(null)
-
+    
 
     function handleGridClick(event) {
         let boundingRect = event.target.getBoundingClientRect()
@@ -58,8 +58,9 @@ export default function Play() {
 
 
     function restart() {
-        setPlacedDisks(new Array(6).fill(new Array(7).fill(0)))
+        setPlacedDisks(Array(6).fill().map(() => Array(7).fill(0)))
         setCurrentTurn(1)
+        setWinner(0)
     }
 
     
@@ -209,10 +210,14 @@ export default function Play() {
                         <img className={styles.gridFront} src={gridFront} alt='' />
                     </div>
                 </div>
+                {/* Key is used to prevent the indicator for different players sharing the same timer state.
+                    This occurs because the component is always in the same place in the render tree. */}
                 <PlayerIndicator 
+                    key={Math.random()}
                     currentTurn={currentTurn} 
                     setCurrentTurn={setCurrentTurn}
                     winner={winner}
+                    restart={restart}
                 />
             </main>
         </div>
