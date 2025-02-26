@@ -4,18 +4,33 @@ import player1 from '../assets/images/you.svg';
 import player2 from '../assets/images/cpu.svg';
 import gridFront from '../assets/images/grid-front-layer.svg';
 import gridBack from '../assets/images/grid-back-layer.svg';
-import { useRef, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Disk from '../components/Disk';
 import PlayerIndicator from '../components/PlayerIndicator';
 
 export default function Play() {
+    const TIME_PER_TURN = 20
+
+    let [timeLeft, setTimeLeft] = useState(TIME_PER_TURN)
     let [player1Score, setPlayer1Score] = useState(0);
     let [player2Score, setPlayer2Score] = useState(0);
     let [currentTurn, setCurrentTurn] = useState(1);
     let [placedDisks, setPlacedDisks] = useState(Array(6).fill().map(() => Array(7).fill(0)))
     let [winner, setWinner] = useState(0);
     const gridRef = useRef(null)
+
+    useEffect(() => {
+            let timer = setInterval(() => setTimeLeft(timeLeft - 1), 1000)
+
+            if (timeLeft === 0) {
+                setCurrentTurn(turn => turn === 1 ? 2 : 1)
+                setTimeLeft(TIME_PER_TURN)
+            }
     
+            // Closure over timer variable
+            return () => {clearInterval(timer)}
+        }, [timeLeft])
+
 
     function handleGridClick(event) {
         let boundingRect = event.target.getBoundingClientRect()
@@ -31,6 +46,7 @@ export default function Play() {
             if (placedDisks[cellY][cellX] === 0) {
                 finalCellY = cellY
                 setCurrentTurn(currentTurn === 1 ? 2 : 1)
+                setTimeLeft(TIME_PER_TURN)
                 break
             }
         }
@@ -60,6 +76,7 @@ export default function Play() {
     function restart() {
         setPlacedDisks(Array(6).fill().map(() => Array(7).fill(0)))
         setCurrentTurn(1)
+        setTimeLeft(TIME_PER_TURN)
         setWinner(0)
     }
 
@@ -212,8 +229,8 @@ export default function Play() {
                 </div>
                 {/* Key is used to prevent the indicator for different players sharing the same timer state.
                     This occurs because the component is always in the same place in the render tree. */}
-                <PlayerIndicator 
-                    key={Math.random()}
+                <PlayerIndicator
+                    timeLeft={timeLeft}
                     currentTurn={currentTurn} 
                     setCurrentTurn={setCurrentTurn}
                     winner={winner}

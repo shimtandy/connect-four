@@ -1,39 +1,7 @@
 import styles from './PlayerIndicator.module.css'
-import { useEffect, useState } from 'react'
 
-// Problem was that this is always rendered in the same position. As such, the timeLeft state was persisting between
-// renders. The same instance was being used for each render
-
-export default function PlayerIndicator({currentTurn, setCurrentTurn, winner, restart}) {
-
-    let [timeLeft, setTimeLeft] = useState(10)
-
-    useEffect(() => {
-        let timer = null
-
-        if (winner === 0) {
-            clearInterval(timer)
-
-            timer = setInterval(() => setTimeLeft(timeLeft - 1), 1000)
-
-            if (timeLeft === 0) {
-                setCurrentTurn(currentTurn === 1 ? 2 : 1)
-                setTimeLeft(10)
-            }
-        } else {
-            timer = setInterval(() => setTimeLeft(timeLeft - 1), 1000)
-        }
-
-        return () => {
-            clearInterval(timer)
-        }
-    }, [timeLeft, winner])
-
-    useEffect(() => {
-        setTimeLeft(10)
-    }, [currentTurn])
-
-
+export default function PlayerIndicator({timeLeft, currentTurn, winner, restart}) {
+    
     const className = styles.indicator + ' ' + (currentTurn === 1 ? styles.player1 : styles.player2)
     const winBackgroundClass = styles.indicatorSection + ' ' + (() => {
         if (winner === 1) {
