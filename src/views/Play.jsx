@@ -232,7 +232,10 @@ export default function Play() {
                         ref={gridRef}
                         onClick={handleGridClick}>
                         <img className={styles.gridBack} src={gridBack} alt='' />
-                        {createDiskElements()}
+                        <div className={styles.diskContainer}>
+                            {createDiskElements()}
+                        </div>
+                        
                         <img className={styles.gridFront} src={gridFront} alt='' />
                     </div>
                 </div>

@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import { motion } from 'motion/react'
 import styles from './disk.module.css'
 
@@ -19,7 +18,7 @@ function bounceEase(x) {
     }
 }
 
-export default function Disk({gridX, gridY, cellSize=50, player}) {
+export default function Disk({gridX, gridY, player}) {
     return (
         <motion.div 
             className={styles.disk + ' ' + (player == 1 ? styles.player1 : styles.player2)}
@@ -27,14 +26,14 @@ export default function Disk({gridX, gridY, cellSize=50, player}) {
                 top: 0
             }}
             animate={{
-                top: gridY * cellSize + 'px',
+                top: gridY * (1 / 6) * 100 + '%',
             }}
             transition={{
                 duration: 1,
                 ease: bounceEase
             }}
             style={{
-                left: gridX * cellSize
+                left: gridX * (1 / 7) * 100 + '%'
             }} />
     )
 }
