@@ -79,3 +79,30 @@ body {
   background-color: var(--color-salmon);
   color: white;
 }
+
+/* Modal transitions */
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.ReactModal__Content {
+  transform: scale(0);
+  transition: transform 1.0s;
+}
+
+.ReactModal__Content--after-open {
+  transform: scale(1);
+}
+
+.ReactModal__Content--before-close {
+  transform: scale(0);
+}

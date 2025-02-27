@@ -187,6 +187,7 @@
     padding-inline: 4rem;
 }
 
+
 @media screen and (min-width: 1024px) {
     .header {
         grid-column: 3;

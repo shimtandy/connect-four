@@ -1,0 +1,8 @@
+* Add player vs CPU
+* Refactor Play component
+* Fix bug: when placing a disk into the top row, it is possible to quickly click again and replace it with a disk of the other colour.
+* Better animations: animations for opening of the menu. Maybe have to use something other than React-Modal? Not sure if it is easy to animate
+    it with Motion?
+* Exit animations? React-Router is making this problematic currently.
+* Better layout for tablets.
+* Maybe experiment with animating the scorecard faces? e.g. animate the winner to happy and loser to sad using SVG animations.
