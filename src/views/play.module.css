@@ -115,6 +115,7 @@
     grid-column: span 2;
     position: relative;
     top: 40px;
+    cursor: pointer;
 
     max-width: 350px;
     

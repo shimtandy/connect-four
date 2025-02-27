@@ -40,6 +40,12 @@ export default function Play() {
 
 
     function handleGridClick(event) {
+        if (winner === 0) {
+            processGridClick(event)
+        }
+    }
+
+    function processGridClick(event) {
         let boundingRect = event.target.getBoundingClientRect()
         let gridSpaceMouseX = event.clientX - boundingRect.x
 
@@ -230,7 +236,7 @@ export default function Play() {
                     <div
                         className={styles.grid}
                         ref={gridRef}
-                        onClick={handleGridClick}>
+                        onClick={(handleGridClick)}>
                         <img className={styles.gridBack} src={gridBack} alt='' />
                         <div className={styles.diskContainer}>
                             {createDiskElements()}
