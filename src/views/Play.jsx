@@ -25,6 +25,7 @@ export default function Play() {
     
     const gridRef = useRef(null)
     const roundTimer = useRef(null)
+    const canPlace = useRef(true)
 
 
     useEffect(() => {
@@ -40,8 +41,11 @@ export default function Play() {
 
 
     function handleGridClick(event) {
-        if (winner === 0) {
+        if (winner === 0 && canPlace.current) {
             processGridClick(event)
+
+            canPlace.current = false
+            setTimeout(() => canPlace.current = true, 600)
         }
     }
 
@@ -237,12 +241,19 @@ export default function Play() {
                         className={styles.grid}
                         ref={gridRef}
                         onClick={(handleGridClick)}>
-                        <img className={styles.gridBack} src={gridBack} alt='' />
+                        <img 
+                            className={styles.gridBack}
+                            src={gridBack} 
+                            alt='' />
                         <div className={styles.diskContainer}>
                             {createDiskElements()}
                         </div>
                         
-                        <img className={styles.gridFront} src={gridFront} alt='' />
+                        <img 
+                            className={styles.gridFront} 
+                            src={gridFront} 
+                            alt='' 
+                            draggable='false' />
                     </div>
                 </div>
                 <PlayerIndicator
