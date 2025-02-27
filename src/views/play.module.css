@@ -1,6 +1,6 @@
 .viewContainer {
     display: grid;
-    grid-template-columns: 10% 1fr 10%;
+    grid-template-columns: 10% 1fr auto 1fr 10%;
     grid-template-rows: max-content auto;
     justify-content: center;
     justify-items: center;
@@ -16,6 +16,8 @@
 }
 
 .header {
+    grid-column: 2 / 5;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -62,7 +64,8 @@
 }
 
 .playerNumber {
-    font: var(--font-extra-small)
+    font: var(--font-extra-small);
+    width: max-content;
 }
 
 .playerScore {
@@ -99,8 +102,10 @@
 }
 
 .gridAndScores {
+    grid-column: 2 / 5;
     display: grid;
     justify-items: center;
+    align-items: center;
     grid-template-columns: 1fr 1fr;
     width: 100%;
 }
@@ -179,4 +184,61 @@
 .modal > button {
     margin-bottom: 1.5rem;
     padding-inline: 4rem;
+}
+
+@media screen and (min-width: 1024px) {
+    .header {
+        grid-column: 3;
+    }
+
+    .gridAndScores {
+        grid-column: 1 / -1;
+
+        grid-template-columns: subgrid;
+        grid-template-rows: 1fr;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .gridAndScores > * {
+        grid-row: 1;
+        margin-top: 10px;
+    }
+
+    .grid {
+        grid-column: 3;
+        max-width: 500px;
+
+        top: 0;
+    }
+
+    .scoreCard {
+        grid-column: 2;
+        height: min-content;
+
+        padding-block: 1.5rem;
+        padding-inline: 1.5rem;
+    }
+
+    .scoreCardRHS {
+        grid-column: 4;
+    }
+
+    .scoreCard img {
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -60%);
+
+        height: 40%;
+    }
+
+    .playerNumber {
+        font: var(--font-small)
+    }
+
+    .playerScore {
+        font: var(--font-large);
+    }
+
 }
