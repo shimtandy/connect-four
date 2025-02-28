@@ -1,7 +1,5 @@
 import styles from "./play.module.css";
 import logo from "../assets/images/logo.svg";
-import player1 from "../assets/images/you.svg";
-import player2 from "../assets/images/cpu.svg";
 import gridFront from "../assets/images/grid-front-layer.svg";
 import gridBack from "../assets/images/grid-back-layer.svg";
 import { useRef, useEffect, useState } from "react";
@@ -9,6 +7,7 @@ import Disk from "../components/Disk";
 import PlayerIndicator from "../components/PlayerIndicator";
 import Modal from "react-modal";
 import { Link } from "react-router";
+import ScoreCard from "../components/ScoreCard";
 
 export default function Play() {
     const TIME_PER_TURN = 20;
@@ -240,18 +239,8 @@ export default function Play() {
             </header>
             <main className={styles.contentContainer}>
                 <div className={styles.gridAndScores}>
-                    <div className={styles.scoreCard}>
-                        <div className={styles.playerNumber}>Player 1</div>
-                        <div className={styles.playerScore}>{player1Score}</div>
-                        <img src={player1} alt="" />
-                    </div>
-                    <div
-                        className={styles.scoreCard + " " + styles.scoreCardRHS}
-                    >
-                        <div className={styles.playerNumber}>Player 2</div>
-                        <div className={styles.playerScore}>{player2Score}</div>
-                        <img src={player2} alt="" />
-                    </div>
+                    <ScoreCard playerNum={1} score={player1Score} />
+                    <ScoreCard playerNum={2} score={player2Score} />
                     <div
                         className={styles.grid}
                         ref={gridRef}

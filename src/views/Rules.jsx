@@ -72,14 +72,14 @@ export default function Rules() {
                                         cy="35"
                                         r="33.5"
                                         stroke="black"
-                                        stroke-width="3"
+                                        strokeWidth="3"
                                     />
                                 </g>
                                 <path
                                     id="Path"
                                     d="M20 34.5819L30.264 44.846L50.11 25"
                                     stroke="white"
-                                    stroke-width="3"
+                                    strokeWidth="3"
                                 />
                             </g>
                         </svg>

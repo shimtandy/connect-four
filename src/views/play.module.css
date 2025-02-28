@@ -47,43 +47,6 @@
     cursor: pointer;
 }
 
-.scoreCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 20px;
-    border: 3px solid black;
-    box-shadow: 0px 10px 0px 0px black;
-
-    max-width: 200px;
-    padding-block: 0.1rem;
-    padding-inline: 9vw;
-    position: relative;
-}
-
-.playerNumber {
-    font: var(--font-extra-small);
-    width: max-content;
-}
-
-.playerScore {
-    font: var(--font-small);
-}
-
-.scoreCard img {
-    position: absolute;
-
-    left: 0;
-    transform: translateX(-50%);
-    height: 90%;
-}
-
-.scoreCardRHS img {
-    position: absolute;
-    left: 100%;
-}
 
 .contentContainer {
     grid-column: 1 / -1;
@@ -215,32 +178,5 @@
         top: 0;
     }
 
-    .scoreCard {
-        grid-column: 2;
-        height: min-content;
-
-        padding-block: 1.5rem;
-        padding-inline: 1.5rem;
-    }
-
-    .scoreCardRHS {
-        grid-column: 4;
-    }
-
-    .scoreCard img {
-        left: 50%;
-        top: 0;
-        transform: translate(-50%, -60%);
-
-        height: 40%;
-    }
-
-    .playerNumber {
-        font: var(--font-small)
-    }
-
-    .playerScore {
-        font: var(--font-large);
-    }
 
 }

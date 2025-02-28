@@ -6,3 +6,5 @@
 * Exit animations? React-Router is making this problematic currently.
 * Better layout for tablets.
 * Maybe experiment with animating the scorecard faces? e.g. animate the winner to happy and loser to sad using SVG animations.
+
+Priority: exit animations for modal and rules. Perhaps also some transitions between pages? Perhaps just an overlay fade in/out.
