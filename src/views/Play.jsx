@@ -1,13 +1,12 @@
 import styles from "./play.module.css";
 import logo from "../assets/images/logo.svg";
-import gridFront from "../assets/images/grid-front-layer.svg";
-import gridBack from "../assets/images/grid-back-layer.svg";
 import { useRef, useEffect, useState } from "react";
 import Disk from "../components/Disk";
 import PlayerIndicator from "../components/PlayerIndicator";
 import Modal from "react-modal";
 import { Link } from "react-router";
 import ScoreCard from "../components/ScoreCard";
+import Grid from "../components/Grid";
 
 export default function Play() {
     const TIME_PER_TURN = 20;
@@ -26,7 +25,6 @@ export default function Play() {
     let [winner, setWinner] = useState(0);
     let [showModal, setShowModal] = useState(false);
 
-    const gridRef = useRef(null);
     const roundTimer = useRef(null);
     const canPlace = useRef(true);
 
@@ -57,7 +55,7 @@ export default function Play() {
         let gridSpaceMouseX = event.clientX - boundingRect.x;
 
         // Important that width is used for cellWidth. Grid has extra height
-        // at the bottom..
+        // at the bottom.
         let cellSize = boundingRect.width / GRID_WIDTH;
         let cellX = Math.floor(gridSpaceMouseX / cellSize);
         let finalCellY = 0;
@@ -241,27 +239,7 @@ export default function Play() {
                 <div className={styles.gridAndScores}>
                     <ScoreCard playerNum={1} score={player1Score} />
                     <ScoreCard playerNum={2} score={player2Score} />
-                    <div
-                        className={styles.grid}
-                        ref={gridRef}
-                        onClick={handleGridClick}
-                    >
-                        <img
-                            className={styles.gridBack}
-                            src={gridBack}
-                            alt=""
-                        />
-                        <div className={styles.diskContainer}>
-                            {createDiskElements()}
-                        </div>
-
-                        <img
-                            className={styles.gridFront}
-                            src={gridFront}
-                            alt=""
-                            draggable="false"
-                        />
-                    </div>
+                    <Grid></Grid>
                 </div>
                 <PlayerIndicator
                     timeLeft={timeLeft}

@@ -73,38 +73,6 @@
     width: 100%;
 }
 
-/* TODO: Create overlap effect with grid rather than position */
-.grid {
-    grid-column: span 2;
-    position: relative;
-    top: 40px;
-    cursor: pointer;
-
-    max-width: 350px;
-    
-}
-
-.gridFront {
-    position: relative;
-    width: 100%;
-}
-
-.gridBack {
-    position: absolute;
-    top: 3px;
-    width: 100%;
-}
-
-.diskContainer {
-    background-color: rgba(0, 255, 140, 0);
-
-    width: 100%;
-    height: 90%;
-
-    position: absolute;
-
-
-}
 
 .modalOverlay {
     display: flex;
@@ -170,13 +138,5 @@
         grid-row: 1;
         margin-top: 10px;
     }
-
-    .grid {
-        grid-column: 3;
-        max-width: 500px;
-
-        top: 0;
-    }
-
 
 }
