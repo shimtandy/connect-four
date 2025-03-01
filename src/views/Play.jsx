@@ -41,59 +41,6 @@ export default function Play() {
         };
     }, [timeLeft]);
 
-    function handleGridClick(event) {
-        if (winner === 0 && canPlace.current) {
-            processGridClick(event);
-
-            canPlace.current = false;
-            setTimeout(() => (canPlace.current = true), 600);
-        }
-    }
-
-    function processGridClick(event) {
-        let boundingRect = event.target.getBoundingClientRect();
-        let gridSpaceMouseX = event.clientX - boundingRect.x;
-
-        // Important that width is used for cellWidth. Grid has extra height
-        // at the bottom.
-        let cellSize = boundingRect.width / GRID_WIDTH;
-        let cellX = Math.floor(gridSpaceMouseX / cellSize);
-        let finalCellY = 0;
-
-        for (let cellY = 5; cellY >= 0; cellY--) {
-            if (placedDisks[cellY][cellX] === 0) {
-                finalCellY = cellY;
-                setCurrentTurn(currentTurn === 1 ? 2 : 1);
-                setTimeLeft(TIME_PER_TURN);
-                break;
-            }
-        }
-
-        let newPlacedDisks = placedDisks.map((row, index) => {
-            if (finalCellY == index) {
-                return row.map((value, innerIndex) => {
-                    if (cellX == innerIndex) {
-                        return currentTurn;
-                    } else {
-                        return value;
-                    }
-                });
-            } else {
-                return row;
-            }
-        });
-        setPlacedDisks(newPlacedDisks);
-        let win = checkWin(
-            { x: cellX, y: finalCellY },
-            currentTurn,
-            newPlacedDisks
-        );
-
-        if (win) {
-            handleWin();
-        }
-    }
-
     function restart() {
         setPlacedDisks(
             Array(GRID_HEIGHT)
@@ -113,6 +60,52 @@ export default function Play() {
         }
 
         setWinner(currentTurn);
+    }
+
+    function getClickedCellXPos(clickEvent) {
+        let boundingRect = clickEvent.target.getBoundingClientRect();
+        let gridSpaceMouseX = clickEvent.clientX - boundingRect.x;
+
+        // Important that width is used for cellWidth. Grid has extra height
+        // at the bottom.
+        let cellSize = boundingRect.width / GRID_WIDTH;
+        let cellX = Math.floor(gridSpaceMouseX / cellSize);
+
+        return cellX;
+    }
+
+    function columnIsFull(columnNumber) {
+        return placedDisks[0][columnNumber] !== 0;
+    }
+
+    /** Given a clicked column, returns the row position a disk will settle in after
+        falling, taking into consideration other disks in the column. */
+    function getFinalCellYPos(clickedCellXPosition) {
+        let finalCellY = 0;
+        for (let cellY = 5; cellY >= 0; cellY--) {
+            if (placedDisks[cellY][clickedCellXPosition] === 0) {
+                finalCellY = cellY;
+                break;
+            }
+        }
+        return finalCellY;
+    }
+
+    function makeNewDiskArray(placedDiskX, placedDiskY) {
+        let newPlacedDisks = placedDisks.map((row, index) => {
+            if (placedDiskY == index) {
+                return row.map((value, innerIndex) => {
+                    if (placedDiskX == innerIndex) {
+                        return currentTurn;
+                    } else {
+                        return value;
+                    }
+                });
+            } else {
+                return row;
+            }
+        });
+        return newPlacedDisks;
     }
 
     function checkWin(lastDiskPosition, lastPlayer, nextPlacedDisksState) {
@@ -187,6 +180,36 @@ export default function Play() {
             workingY++;
         }
         return false;
+    }
+
+    function processGridClick(event) {
+        if (!winner && !canPlace.current) {
+            return;
+        }
+
+        canPlace.current = false;
+        setTimeout(() => (canPlace.current = true), 600);
+        let cellX = getClickedCellXPos(event);
+
+        if (columnIsFull(cellX)) {
+            return;
+        }
+
+        let cellY = getFinalCellYPos(cellX);
+        let updatedDiskArray = makeNewDiskArray(cellX, cellY);
+        setCurrentTurn(currentTurn === 1 ? 2 : 1);
+        setTimeLeft(TIME_PER_TURN);
+        setPlacedDisks(updatedDiskArray);
+
+        let gameIsWon = checkWin(
+            { x: cellX, y: cellY },
+            currentTurn,
+            updatedDiskArray
+        );
+
+        if (gameIsWon) {
+            handleWin();
+        }
     }
 
     function createDiskElements() {
