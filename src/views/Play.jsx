@@ -66,8 +66,6 @@ export default function Play() {
         let boundingRect = clickEvent.target.getBoundingClientRect();
         let gridSpaceMouseX = clickEvent.clientX - boundingRect.x;
 
-        // Important that width is used for cellWidth. Grid has extra height
-        // at the bottom.
         let cellSize = boundingRect.width / GRID_WIDTH;
         let cellX = Math.floor(gridSpaceMouseX / cellSize);
 
@@ -183,7 +181,7 @@ export default function Play() {
     }
 
     function processGridClick(event) {
-        if (!winner && !canPlace.current) {
+        if (winner || !canPlace.current) {
             return;
         }
 
@@ -262,7 +260,9 @@ export default function Play() {
                 <div className={styles.gridAndScores}>
                     <ScoreCard playerNum={1} score={player1Score} />
                     <ScoreCard playerNum={2} score={player2Score} />
-                    <Grid></Grid>
+                    <Grid clickHandler={processGridClick}>
+                        {createDiskElements()}
+                    </Grid>
                 </div>
                 <PlayerIndicator
                     timeLeft={timeLeft}
